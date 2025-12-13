@@ -12,6 +12,10 @@ import CreateDonationRequest from "../pages/Dashboard/CreateDonationRequest/Crea
 import MyDonationRequests from "../pages/Dashboard/MyDonationRequests/MyDonationRequests";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
+import AllBloodDonationRequest from "../pages/Dashboard/AllBloodDonationRequest/AllBloodDonationRequest";
+import PublicDonationRequests from "../pages/PublicDonationRequests/PublicDonationRequests";
+import DonationRequestDetails from "../pages/PublicDonationRequests/DonationRequestDetails";
+import About from "../pages/About/About";
 
 export const router = createBrowserRouter([
   {
@@ -23,9 +27,22 @@ export const router = createBrowserRouter([
         Component: Home,
       },
       {
+        // search donor page
         path: "/request-donation",
         Component: RequestDonation,
         loader: () => fetch("/location.json").then((res) => res.json()),
+      },
+      {
+        path: "/donation-requests",
+        Component: PublicDonationRequests,
+      },
+      {
+        path: "/donation-requests/:id",
+        Component: DonationRequestDetails, // <-- Make sure to import this component
+      },
+      {
+        path: "/about",
+        Component: About,
       },
     ],
   },
@@ -72,6 +89,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/my-donation-requests",
         Component: MyDonationRequests,
+      },
+      {
+        path: "/dashboard/all-blood-donation-requests",
+        Component: AllBloodDonationRequest,
       },
     ],
   },

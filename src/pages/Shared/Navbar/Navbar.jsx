@@ -45,7 +45,22 @@ const Navbar = () => {
             }`
           }
         >
-          Request Donation
+          Search Donor
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink
+          to="/donation-requests"
+          className={({ isActive }) =>
+            `font-medium transition duration-200 ${
+              isActive
+                ? "text-red-600 border-b-2 border-red-600"
+                : "text-gray-600 hover:text-red-500 hover:bg-transparent"
+            }`
+          }
+        >
+          Blood Donation requests
         </NavLink>
       </li>
       <li>
