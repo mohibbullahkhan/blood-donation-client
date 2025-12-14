@@ -77,20 +77,38 @@ const Navbar = () => {
           About
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/dashboard"
-          className={({ isActive }) =>
-            `font-medium transition duration-200 ${
-              isActive
-                ? "text-red-600 border-b-2 border-red-600"
-                : "text-gray-600 hover:text-red-500 hover:bg-transparent"
-            }`
-          }
-        >
-          Dashboard
-        </NavLink>
-      </li>
+      {user && (
+        <>
+          <li>
+            <NavLink
+              to="/support-us"
+              className={({ isActive }) =>
+                `font-medium transition duration-200 ${
+                  isActive
+                    ? "text-red-600 border-b-2 border-red-600"
+                    : "text-gray-600 hover:text-red-500 hover:bg-transparent"
+                }`
+              }
+            >
+              Support Us
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                `font-medium transition duration-200 ${
+                  isActive
+                    ? "text-red-600 border-b-2 border-red-600"
+                    : "text-gray-600 hover:text-red-500 hover:bg-transparent"
+                }`
+              }
+            >
+              Dashboard
+            </NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 

@@ -1,8 +1,19 @@
-import { SquareUser } from "lucide-react";
+import {
+  Antenna,
+  GitPullRequestCreateArrow,
+  House,
+  LayoutGrid,
+  Omega,
+  SquareUser,
+  Users,
+} from "lucide-react";
 import React from "react";
 import { Link, Outlet } from "react-router";
+import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
+  const { role } = useRole();
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -53,19 +64,7 @@ const DashboardLayout = () => {
                 data-tip="Homepage"
               >
                 {/* Home icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
+                <House />
                 <span className="is-drawer-close:hidden">Homepage</span>
               </Link>
             </li>
@@ -78,45 +77,8 @@ const DashboardLayout = () => {
                 data-tip="Dashboard Home"
               >
                 {/* Home icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
+                <LayoutGrid />
                 <span className="is-drawer-close:hidden">Dashboard Home</span>
-              </Link>
-            </li>
-
-            {/* all users */}
-            <li>
-              <Link
-                to="/dashboard/all-users"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="All-Users"
-              >
-                {/* Home icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
-                <span className="is-drawer-close:hidden">All-Users</span>
               </Link>
             </li>
 
@@ -128,19 +90,7 @@ const DashboardLayout = () => {
                 data-tip="Create Donation Request"
               >
                 {/* Home icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
+                <GitPullRequestCreateArrow />
                 <span className="is-drawer-close:hidden">
                   Create Donation Request
                 </span>
@@ -155,50 +105,62 @@ const DashboardLayout = () => {
                 data-tip="My Donation Requests"
               >
                 {/* Home icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
+                <Omega />
                 <span className="is-drawer-close:hidden">
                   My Donation Requests
                 </span>
               </Link>
             </li>
-            {/* All Donation Requests */}
-            <li>
-              <Link
-                to="/dashboard/all-blood-donation-requests"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="All-Blood-Donation-Request"
-              >
-                {/* Home icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
-                <span className="is-drawer-close:hidden">
-                  All Blood Donation Requests
-                </span>
-              </Link>
-            </li>
+            {/* admin section */}
+            {role === "admin" && (
+              <>
+                {/* all users */}
+                <li>
+                  <Link
+                    to="/dashboard/all-users"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="All-Users"
+                  >
+                    {/* Home icon */}
+                    <Users />
+                    <span className="is-drawer-close:hidden">All-Users</span>
+                  </Link>
+                </li>
+                {/* All Donation Requests */}
+                <li>
+                  <Link
+                    to="/dashboard/all-blood-donation-requests"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="All-Blood-Donation-Request"
+                  >
+                    {/* Home icon */}
+                    <Antenna />
+                    <span className="is-drawer-close:hidden">
+                      All Blood Donation Requests
+                    </span>
+                  </Link>
+                </li>
+              </>
+            )}
+            {/* Volunteer  section */}
+            {role === "volunteer" && (
+              <>
+                {/* All Donation Requests */}
+                <li>
+                  <Link
+                    to="/dashboard/all-blood-donation-requests"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="All-Blood-Donation-Request"
+                  >
+                    {/* Home icon */}
+                    <Antenna />
+                    <span className="is-drawer-close:hidden">
+                      All Blood Donation Requests
+                    </span>
+                  </Link>
+                </li>
+              </>
+            )}
 
             {/* Profile */}
             <li>

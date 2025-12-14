@@ -16,6 +16,12 @@ import AllBloodDonationRequest from "../pages/Dashboard/AllBloodDonationRequest/
 import PublicDonationRequests from "../pages/PublicDonationRequests/PublicDonationRequests";
 import DonationRequestDetails from "../pages/PublicDonationRequests/DonationRequestDetails";
 import About from "../pages/About/About";
+import SupportUs from "../pages/SupportUs/SupportUs";
+import PaymentSuccess from "../pages/SupportUs/PaymentSuccess";
+import PaymentCancelled from "../pages/SupportUs/PaymentCancelled";
+// import Payment from "../pages/SupportUs/Payment";
+import PaymentForm from "../pages/SupportUs/Payment";
+// import CommunityFunds from "../pages/SupportUs/SupportUs";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +49,22 @@ export const router = createBrowserRouter([
       {
         path: "/about",
         Component: About,
+      },
+      {
+        path: "/support-us",
+        Component: SupportUs,
+      },
+      {
+        path: "/payment-form",
+        Component: PaymentForm,
+      },
+      {
+        path: "/payment-success",
+        element: <PaymentSuccess></PaymentSuccess>,
+      },
+      {
+        path: "/payment-cancelled",
+        element: <PaymentCancelled></PaymentCancelled>,
       },
     ],
   },
