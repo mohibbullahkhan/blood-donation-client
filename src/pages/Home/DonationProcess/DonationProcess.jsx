@@ -50,7 +50,7 @@ const DonationProcess = () => {
           {processSteps.map((item) => (
             <div
               key={item.step}
-              className="flex flex-col items-center text-center"
+              className="flex flex-col items-center text-center rounded-xl border-t-4 border-red-600"
             >
               {/* Image Container with Step Number Overlay */}
               <div className="relative w-full overflow-hidden rounded-lg shadow-xl mb-6 aspect-[4/3]">

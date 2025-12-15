@@ -1,68 +1,81 @@
 import React from "react";
+// Import Lucide Icons for a clean, professional look
+import {
+  HeartHandshake, // Used for "Success Smiles" / Lives Saved
+  Users, // Used for "Happy Donors"
+  HeartPulse, // Used for "Happy Recipients" / Health Impact
+  Award, // Used for "Total Awards"
+  Droplet, // Section header accent
+} from "lucide-react";
 
 const ImpactStats = () => {
+  // Define the icons and data using the imported Lucide components
   const statsData = [
     {
       id: 1,
-      icon: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z", // Heartbeat/Health Icon Path (SVG)
+      Icon: HeartHandshake, // Icon for positive impact/lives touched
       count: 2578,
-      label: "Success Smiles",
+      label: "Lives Touched",
     },
     {
       id: 2,
-      icon: "M18 7h-2.5c-1.1 0-2 .9-2 2s.9 2 2 2H18v2h-4v2h-2v-2h-2v-2h2v-2h-4V7H6v10h12V7z", // Stethoscope Icon Path (Placeholder, simplified)
+      Icon: Users, // Icon for community/donors
       count: 3235,
-      label: "Happy Donors",
+      label: "Active Donors",
     },
     {
       id: 3,
-      icon: "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm8 2l-2.09 2.09c-2.83-1.4-5.67-1.4-8.5 0L6 13c-2.76 0-5 2.24-5 5v3h22v-3c0-2.76-2.24-5-5-5z", // Group/Recipient Icon Path (SVG)
+      Icon: HeartPulse, // Icon for medical/health impact
       count: 3568,
-      label: "Happy Recipients",
+      label: "Blood Units Collected",
     },
     {
       id: 4,
-      icon: "M19 12h-2v4h-4v-4H9v4H5v-4H3v6h18v-6h-2zM12 1L8 5h8z", // Building/Award Icon Path (Placeholder, simplified)
+      Icon: Award, // Icon for recognition/milestones
       count: 1364,
-      label: "Total Awards",
+      label: "Campaigns Launched",
     },
   ];
 
   return (
-    <div className="py-16 md:py-24 bg-white">
-      <div className="container mx-auto px-4 max-w-6xl">
-        {/* Optional: Section Header if needed, otherwise skip */}
-        {/* <div className="text-center mb-12">
-          <h2 className="text-3xl font-extrabold text-gray-800">OUR IMPACT</h2>
-          <div className="w-12 h-1 bg-red-600 mx-auto"></div>
-        </div> */}
+    // Clean, modern background with subtle accent
+    <div className="py-10 md:py-14 bg-red-50/70">
+      <div className="container mx-auto px-4 max-w-7xl">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <Droplet className="w-10 h-10 mx-auto text-red-600 mb-3" />
+          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+            Our <span className="text-red-600">Impact</span> So Far
+          </h2>
+          <div className="w-20 h-1 bg-red-600 mx-auto rounded-full mb-6"></div>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            These numbers reflect the incredible generosity of our community and
+            the vital difference every donation makes.
+          </p>
+        </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+        {/* Stats Grid (More spacing and visual depth) */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
           {statsData.map((stat) => (
             <div
               key={stat.id}
-              className="flex flex-col items-center justify-center p-6 md:p-8 bg-white border border-gray-100 rounded-lg shadow-sm transition duration-300 hover:shadow-xl hover:border-red-100"
+              className="flex flex-col items-center justify-center p-6 md:p-10 bg-white rounded-xl shadow-2xl transition duration-500 transform hover:scale-[1.03] hover:shadow-red-300/50 border-t-4 border-red-600"
             >
-              {/* Icon */}
-              <div className="mb-4">
-                <svg
-                  className="w-10 h-10 text-gray-700"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  {/* Using a generic SVG structure. You would replace 'd' with actual icon paths if using a library like Heroicons */}
-                  <path d={stat.icon} />
-                </svg>
+              {/* Icon Container (Thematic and Prominent) */}
+              <div className="mb-4 p-3 bg-red-100/70 rounded-full">
+                <stat.Icon
+                  className="w-10 h-10 text-red-600"
+                  aria-hidden="true"
+                />
               </div>
 
-              {/* Count */}
-              <div className="text-4xl md:text-5xl font-extrabold mb-1 text-red-600">
+              {/* Count (Large, Bold, Thematic Red) */}
+              <div className="text-4xl md:text-6xl font-black mb-2 text-red-700 tracking-tight">
                 {stat.count.toLocaleString()}
               </div>
 
-              {/* Label */}
-              <p className="text-base text-gray-700 font-medium text-center tracking-wide">
+              {/* Label (Clear and Descriptive) */}
+              <p className="text-base md:text-lg text-gray-800 font-semibold text-center uppercase tracking-wider mt-1">
                 {stat.label}
               </p>
             </div>

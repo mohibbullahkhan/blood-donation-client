@@ -7,7 +7,8 @@ const HomeBanner = () => {
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/placeholder-blood-donation-hero.jpg')",
+          backgroundImage:
+            "url('https://images.pexels.com/photos/1350560/pexels-photo-1350560.jpeg?_gl=1*1twa53l*_ga*MjE0MDU1ODcxMC4xNzY1Nzc5NTI4*_ga_8JE65Q40S6*czE3NjU3Nzk1MjckbzEkZzEkdDE3NjU3Nzk1NDEkajQ2JGwwJGgw')",
           opacity: 0.3,
         }}
       ></div>
