@@ -52,19 +52,35 @@ export const router = createBrowserRouter([
       },
       {
         path: "/support-us",
-        Component: SupportUs,
+        element: (
+          <PrivateRoute>
+            <SupportUs></SupportUs>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/payment-form",
-        Component: PaymentForm,
+        element: (
+          <PrivateRoute>
+            <PaymentForm></PaymentForm>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/payment-success",
-        element: <PaymentSuccess></PaymentSuccess>,
+        element: (
+          <PrivateRoute>
+            <PaymentSuccess></PaymentSuccess>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/payment-cancelled",
-        element: <PaymentCancelled></PaymentCancelled>,
+        element: (
+          <PrivateRoute>
+            <PaymentCancelled></PaymentCancelled>
+          </PrivateRoute>
+        ),
       },
     ],
   },

@@ -137,7 +137,7 @@ const Navbar = () => {
               </svg>
             </div>
             <ul
-              tabIndex={0} // Using 0 for dropdown logic
+              tabIndex={0}
               className="menu menu-sm dropdown-content bg-white border border-gray-100 rounded-box z-10 mt-3 w-52 p-2 shadow-xl"
             >
               {navLinks}
@@ -163,7 +163,7 @@ const Navbar = () => {
           {/* Primary Action Button: Be a Donor */}
           <Link
             className="btn hidden sm:flex bg-red-600 text-white hover:bg-red-700 border-red-600 hover:border-red-700 font-semibold shadow-md transition duration-300"
-            to="/donor-registration" // Updated to a more appropriate link
+            to="/register" // Updated to a more appropriate link
           >
             Be a Donor
           </Link>
@@ -195,9 +195,9 @@ const Navbar = () => {
                 <li className="p-2 text-gray-800 font-semibold border-b mb-1">
                   {user.displayName || "Donor"}
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/profile">Profile</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="/dashboard">Dashboard</Link>
                 </li>
