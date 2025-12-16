@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation, useNavigate } from "react-router"; // Changed 'react-router' to 'react-router-dom'
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 
@@ -18,20 +18,16 @@ const Login = () => {
     signInUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
-        // Navigate to the intended page or home page
         navigate(location.state?.from || "/");
       })
       .catch((error) => {
         console.log(error);
-        // You might want to add a state or toast notification here
-        // to show the user that login failed (e.g., wrong credentials).
       });
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 sm:p-6">
       <div className="w-full max-w-md bg-white rounded-xl shadow-2xl overflow-hidden border border-red-100">
-        {/* Header Section */}
         <div className="p-8 bg-red-600 text-white">
           <h3 className="text-3xl font-extrabold text-center tracking-tight">
             Welcome Back, Blood Buddies
@@ -41,7 +37,6 @@ const Login = () => {
           </p>
         </div>
 
-        {/* Form Section */}
         <form onSubmit={handleSubmit(handleLogin)} className="p-8 space-y-4">
           {/* Email Field */}
           <div>
@@ -80,7 +75,7 @@ const Login = () => {
             )}
           </div>
 
-          {/* Forgot Password Link */}
+          {/* Forgot Password */}
           <div className="text-right">
             <a
               href="#"
