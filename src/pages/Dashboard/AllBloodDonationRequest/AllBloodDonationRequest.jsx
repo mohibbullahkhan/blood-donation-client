@@ -16,7 +16,7 @@
 // } from "lucide-react";
 
 // // Assume a base URL for your backend
-// const API_BASE_URL = "http://localhost:3000";
+// const API_BASE_URL = "https://blood-donation-server-alpha.vercel.app";
 
 // // --- Component Definition: Donation Status Badge ---
 // const StatusBadge = ({ status }) => {
@@ -575,7 +575,7 @@ const useAuth = () => {
 };
 
 // Assume a base URL for your backend
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://blood-donation-server-alpha.vercel.app";
 
 // ... (StatusBadge and other helper components remain the same) ...
 const StatusBadge = ({ status }) => {

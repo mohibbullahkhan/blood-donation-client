@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router";
 import { FaCheckCircle, FaSpinner } from "react-icons/fa";
 
-const BACKEND_BASE_URL = "http://localhost:3000"; // Match your backend URL
+const BACKEND_BASE_URL = "https://blood-donation-server-alpha.vercel.app"; // Match your backend URL
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();

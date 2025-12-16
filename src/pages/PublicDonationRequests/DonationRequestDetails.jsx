@@ -19,7 +19,7 @@ import {
 import useAuth from "../../hooks/useAuth";
 
 // --- Configuration & Authentication Mock ---
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://blood-donation-server-alpha.vercel.app";
 
 // MOCK AUTH (You MUST replace this with your actual Auth Context/Hook)
 // const useAuth = () => {

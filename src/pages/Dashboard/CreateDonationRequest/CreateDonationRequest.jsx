@@ -6,7 +6,7 @@
 // import { PlusCircle, Loader2, HeartHandshake, MapPin } from "lucide-react";
 
 // // --- Configuration ---
-// const BASE_API_URL = "http://localhost:3000";
+// const BASE_API_URL = "https://blood-donation-server-alpha.vercel.app";
 // const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 // // ---------------------
 
@@ -401,7 +401,7 @@ import Swal from "sweetalert2";
 import { PlusCircle, Loader2, HeartHandshake, MapPin } from "lucide-react";
 
 // --- Configuration ---
-const BASE_API_URL = "http://localhost:3000";
+const BASE_API_URL = "https://blood-donation-server-alpha.vercel.app";
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 // ---------------------
 

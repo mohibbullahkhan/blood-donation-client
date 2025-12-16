@@ -16,7 +16,7 @@ import { Link, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 
 // --- Configuration & Mock Authentication ---
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://blood-donation-server-alpha.vercel.app";
 
 // MOCK AUTH (UPDATE THIS WITH YOUR ACTUAL CONTEXT/HOOK)
 

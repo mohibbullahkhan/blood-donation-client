@@ -17,7 +17,7 @@ import Swal from "sweetalert2";
 
 // --- Configuration ---
 // FIX 1: Use the absolute URL for reliable API communication
-const BASE_API_URL = "http://localhost:3000";
+const BASE_API_URL = "https://blood-donation-server-alpha.vercel.app";
 // ---------------------
 
 /**
