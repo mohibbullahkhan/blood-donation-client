@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 const HomeBanner = () => {
   return (
@@ -31,25 +32,25 @@ const HomeBanner = () => {
         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
           {/* Join as a Donor Button */}
           {/* In a real app, this would use a Link component (e.g., from React Router) */}
-          <button
+          <Link
             // Replace with actual navigation logic (e.g., onClick={() => navigate('/register')})
-            onClick={() => console.log("Redirect to Registration Page")}
+            to={`/register`}
             className="px-8 py-3 text-lg font-semibold rounded-full shadow-lg transition duration-300 ease-in-out 
                        bg-red-600 hover:bg-red-700 text-white transform hover:scale-105"
           >
             Join as a Donor
-          </button>
+          </Link>
 
           {/* Search Donors Button */}
           {/* In a real app, this would use a Link component (e.g., from React Router) */}
-          <button
+          <Link
             // Replace with actual navigation logic (e.g., onClick={() => navigate('/search')})
-            onClick={() => console.log("Redirect to Search Page")}
+            to={`/request-donation`}
             className="px-8 py-3 text-lg font-semibold rounded-full shadow-lg transition duration-300 ease-in-out 
                        bg-transparent border-2 border-white hover:bg-white hover:text-gray-800 text-white transform hover:scale-105"
           >
             Search Donors
-          </button>
+          </Link>
         </div>
       </div>
     </div>
