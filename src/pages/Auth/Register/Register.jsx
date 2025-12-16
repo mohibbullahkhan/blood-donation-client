@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
-import { Link, useLoaderData, useLocation, useNavigate } from "react-router"; // Changed 'react-router' to 'react-router-dom'
+import { Link, useLoaderData, useLocation, useNavigate } from "react-router";
 import axios from "axios";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
@@ -52,7 +52,7 @@ const Register = () => {
           .then((res) => {
             const photoURL = res.data.data.url;
 
-            // 3. Create User in Database (MongoDB/Backend)
+            // 3. Create User in Database
             const userInfo = {
               email: data.email,
               displayName: data.name,
@@ -60,7 +60,6 @@ const Register = () => {
               bloodGroup: data.bloodGroup,
               district: data.district,
               upazila: data.upazila,
-              // Add initial status or role if needed, e.g., role: 'donor', status: 'active'
             };
 
             axiosSecure.post("/users", userInfo).then((res) => {
@@ -78,7 +77,7 @@ const Register = () => {
             updateUserProfile(userProfile)
               .then(() => {
                 console.log("user profile updated done");
-                // Navigate after successful registration and profile update
+
                 navigate(location.state?.from || "/");
               })
               .catch((error) => console.log("Profile Update Error:", error));
@@ -93,7 +92,6 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 sm:p-6">
       <div className="w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden border border-red-100">
-        {/* Header Section */}
         <div className="p-8 bg-red-600 text-white">
           <h3 className="text-3xl font-extrabold text-center tracking-tight">
             Join Blood Buddies
@@ -139,7 +137,7 @@ const Register = () => {
             )}
           </div>
 
-          {/* Avatar field (Styling for file input is tricky; using default for simplicity) */}
+          {/* Avatar field  */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Profile Photo (Avatar)
@@ -154,7 +152,7 @@ const Register = () => {
             )}
           </div>
 
-          {/* Blood Group and Location (2 columns on medium/large screens) */}
+          {/* Blood Group and Location  */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Blood Group */}
             <div>
@@ -211,7 +209,7 @@ const Register = () => {
             </div>
           </div>
 
-          {/* Upazila (Occupies full width) */}
+          {/* Upazila  */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Upazila
@@ -220,7 +218,7 @@ const Register = () => {
               {...register("upazila", { required: true })}
               defaultValue=""
               className="w-full p-3 border border-gray-300 rounded-lg bg-white focus:ring-red-500 focus:border-red-500 appearance-none transition duration-150"
-              disabled={!selectedDistrict} // Disable if no district is selected
+              disabled={!selectedDistrict}
             >
               <option value="" disabled>
                 {selectedDistrict
