@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure"; // Adjust path as needed
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import {
   Loader2,
   User,
@@ -13,18 +13,18 @@ import {
   Lock,
   Unlock,
 } from "lucide-react";
-import { toast } from "react-hot-toast"; // Assuming you use react-hot-toast
+import { toast } from "react-hot-toast";
 
 const AllUsers = () => {
   const queryClient = useQueryClient();
   const axiosSecure = useAxiosSecure();
 
-  // --- State for Filtering and Pagination ---
-  const [statusFilter, setStatusFilter] = useState(""); // '' means no filter
+  // State for Filtering and Pagination
+  const [statusFilter, setStatusFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
-  // --- Fetch Users Data ---
+  // Fetch Users Data
   const { data, isLoading, isError } = useQuery({
     queryKey: ["allUsers", currentPage, statusFilter],
     queryFn: async () => {
@@ -37,14 +37,12 @@ const AllUsers = () => {
       });
       return res.data;
     },
-    keepPreviousData: true, // For smoother pagination
+    keepPreviousData: true,
   });
 
   const users = data?.users || [];
   const totalPages = data?.totalPages || 1;
   const totalUsers = data?.totalUsers || 0;
-
-  // --- Mutations for Actions ---
 
   // 1. Role Update Mutation (Make Admin / Volunteer)
   const updateRoleMutation = useMutation({
@@ -53,7 +51,7 @@ const AllUsers = () => {
     },
     onSuccess: (data, variables) => {
       toast.success(`${variables.email}'s role set to ${variables.role}!`);
-      queryClient.invalidateQueries(["allUsers"]); // Refetch the user list
+      queryClient.invalidateQueries(["allUsers"]);
     },
     onError: (error) => {
       toast.error(
@@ -64,14 +62,14 @@ const AllUsers = () => {
     },
   });
 
-  // 2. Status Update Mutation (Block / Unblock)
+  // 2. Status Update (Block / Unblock)
   const updateStatusMutation = useMutation({
     mutationFn: ({ email, status }) => {
       return axiosSecure.patch(`/users/update-status/${email}`, { status });
     },
     onSuccess: (data, variables) => {
       toast.success(`${variables.email} is now ${variables.status}.`);
-      queryClient.invalidateQueries(["allUsers"]); // Refetch the user list
+      queryClient.invalidateQueries(["allUsers"]);
     },
     onError: (error) => {
       toast.error(
@@ -82,7 +80,7 @@ const AllUsers = () => {
     },
   });
 
-  // --- Handlers ---
+  // Handlers
   const handleRoleUpdate = (email, newRole) => {
     if (
       window.confirm(`Are you sure you want to make ${email} a ${newRole}?`)
@@ -108,10 +106,10 @@ const AllUsers = () => {
 
   const handleFilterChange = (e) => {
     setStatusFilter(e.target.value);
-    setCurrentPage(1); // Reset to first page on filter change
+    setCurrentPage(1);
   };
 
-  // --- Loading and Error Views ---
+  // Loading and Error Views
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -154,13 +152,11 @@ const AllUsers = () => {
             <option value="blocked">Blocked</option>
           </select>
         </div>
-        {/* Optional: Add a search bar here */}
       </div>
 
       {/* Users Table */}
       <div className="overflow-x-auto rounded-lg shadow-xl border border-gray-200">
         <table className="table w-full">
-          {/* Table Head */}
           <thead className="bg-red-600 text-white uppercase text-xs tracking-wider">
             <tr>
               <th>Avatar</th>
@@ -171,7 +167,6 @@ const AllUsers = () => {
               <th className="text-center">Actions</th>
             </tr>
           </thead>
-          {/* Table Body */}
           <tbody>
             {users.length === 0 ? (
               <tr>
