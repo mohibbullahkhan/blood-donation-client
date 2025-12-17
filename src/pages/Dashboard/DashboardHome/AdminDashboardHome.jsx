@@ -8,7 +8,6 @@ const AdminDashboardHome = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  // --- Fetch Admin Statistics ---
   const {
     data: stats,
     isLoading,
@@ -16,21 +15,20 @@ const AdminDashboardHome = () => {
   } = useQuery({
     queryKey: ["adminDashboardStats"],
     queryFn: async () => {
-      // Fetch statistics from the new backend route
       const response = await axiosSecure.get("/admin/dashboard-stats");
       return response.data;
     },
-    staleTime: 60000, // Data is fresh for 1 minute
+    staleTime: 60000,
   });
 
-  // Default stats structure for initial load/error
+  // Default stats
   const dashboardStats = stats || {
     totalUsers: 0,
     totalFunding: "0.00",
     totalRequests: 0,
   };
 
-  // --- Card Data Configuration ---
+  // Card Data Configuration
   const statsCards = [
     {
       title: "Total Users (Donors)",
@@ -42,7 +40,7 @@ const AdminDashboardHome = () => {
     },
     {
       title: "Total Funding",
-      // Displaying the dollar sign (or appropriate currency)
+
       count: `$${dashboardStats.totalFunding}`,
       icon: DollarSign,
       color: "text-green-600",
@@ -59,7 +57,7 @@ const AdminDashboardHome = () => {
     },
   ];
 
-  // --- Loading State ---
+  // Loading State
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -71,7 +69,7 @@ const AdminDashboardHome = () => {
     );
   }
 
-  // --- Error State ---
+  // Error State
   if (isError) {
     return (
       <div className="p-8 text-center text-red-600 bg-red-100 rounded-lg shadow-md">
@@ -132,7 +130,7 @@ const AdminDashboardHome = () => {
         })}
       </section>
 
-      {/* Future Admin Content goes here (e.g., recent user registrations, charts) */}
+      {/* Future Admin Content  */}
       <section className="mt-12">
         <h2 className="text-2xl font-bold text-gray-800">
           Recent Activity Overview
