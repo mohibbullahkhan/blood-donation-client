@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router";
+import useAuth from "../../hooks/useAuth";
+import MyPaymentHistory from "./MyPaymentHistory";
 
 const SupportUs = () => {
+  const { user } = useAuth();
+  console.log(user.email, user.displayName);
   return (
     <div className="container mx-auto p-4 md:p-8">
       <h2 className="text-4xl font-extrabold text-red-600 mb-8 border-b-4 border-red-100 pb-2 flex items-center">
@@ -20,6 +24,8 @@ const SupportUs = () => {
       >
         Give Fund Now
       </Link>
+
+      <MyPaymentHistory></MyPaymentHistory>
     </div>
   );
 };

@@ -19,9 +19,8 @@ import About from "../pages/About/About";
 import SupportUs from "../pages/SupportUs/SupportUs";
 import PaymentSuccess from "../pages/SupportUs/PaymentSuccess";
 import PaymentCancelled from "../pages/SupportUs/PaymentCancelled";
-// import Payment from "../pages/SupportUs/Payment";
+
 import PaymentForm from "../pages/SupportUs/Payment";
-// import CommunityFunds from "../pages/SupportUs/SupportUs";
 
 export const router = createBrowserRouter([
   {
