@@ -15,12 +15,8 @@ import {
 import { Link, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 
-// --- Configuration & Mock Authentication ---
 const API_BASE_URL = "https://blood-donation-server-alpha.vercel.app";
 
-// MOCK AUTH (UPDATE THIS WITH YOUR ACTUAL CONTEXT/HOOK)
-
-// --- Component: Donation Request Card ---
 const RequestCard = ({ request, onDetailsClick }) => {
   const {
     recipientName,
@@ -89,7 +85,7 @@ const RequestCard = ({ request, onDetailsClick }) => {
   );
 };
 
-// --- Main Component: PublicDonationRequests ---
+// --- Main Component ---
 const PublicDonationRequests = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -101,12 +97,11 @@ const PublicDonationRequests = () => {
     setLoading(true);
     setError(null);
     try {
-      // Hitting the new backend endpoint
       const response = await axios.get(
         `${API_BASE_URL}/blood-requests/public-pending`
       );
 
-      setRequests(response.data); // Backend now returns the array directly
+      setRequests(response.data);
     } catch (err) {
       console.error("Error fetching public requests:", err);
       setRequests([]);
@@ -122,10 +117,8 @@ const PublicDonationRequests = () => {
 
   const handleViewDetails = (requestId) => {
     if (user) {
-      // Go to the details page if logged in
-      navigate(`/donation-requests/${requestId}`); // Use a clear route path
+      navigate(`/donation-requests/${requestId}`);
     } else {
-      // Redirect to login if not logged in
       navigate("/login", {
         state: { redirectTo: `/donation-requests/${requestId}` },
       });
@@ -147,7 +140,7 @@ const PublicDonationRequests = () => {
         </p>
       </header>
 
-      {/* --- Conditional Rendering Based on State --- */}
+      {/* --- Conditional Rendering --- */}
       {loading ? (
         <div className="text-center py-20 text-red-600 font-semibold flex flex-col items-center justify-center bg-white rounded-xl shadow-lg">
           <Loader2 className="w-8 h-8 animate-spin mb-4" />

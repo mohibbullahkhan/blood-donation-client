@@ -8,7 +8,7 @@ const Footer = () => {
           {/* 1. Logo & Mission Statement */}
           <div className="col-span-2 md:col-span-1 pr-8">
             <h3 className="text-3xl font-bold text-red-500 mb-4 tracking-wider">
-              LifeStream
+              BloodBuddies
             </h3>
             <p className="text-gray-400 text-sm mb-4">
               Giving the gift of life. Our mission is to connect donors and
@@ -67,7 +67,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/faq"
+                  href="/"
                   className="text-gray-400 hover:text-red-500 transition duration-300 text-sm"
                 >
                   FAQ
@@ -75,7 +75,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/terms"
+                  href="/"
                   className="text-gray-400 hover:text-red-500 transition duration-300 text-sm"
                 >
                   Terms & Privacy
@@ -92,7 +92,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="/registration"
+                  href="/register"
                   className="text-gray-400 hover:text-red-500 transition duration-300 text-sm"
                 >
                   Register as Donor
@@ -100,7 +100,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/process"
+                  href="/"
                   className="text-gray-400 hover:text-red-500 transition duration-300 text-sm"
                 >
                   Donation Process
@@ -108,7 +108,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/centers"
+                  href="/"
                   className="text-gray-400 hover:text-red-500 transition duration-300 text-sm"
                 >
                   Find a Center
@@ -116,7 +116,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/preparation"
+                  href="/"
                   className="text-gray-400 hover:text-red-500 transition duration-300 text-sm"
                 >
                   Before You Donate
@@ -137,7 +137,7 @@ const Footer = () => {
                   href="tel:+12345678900"
                   className="text-gray-400 hover:text-red-500"
                 >
-                  +1 234 567 8900
+                  +8801793748096
                 </a>
               </div>
               <div className="flex items-center">
@@ -146,13 +146,13 @@ const Footer = () => {
                   href="mailto:info@lifestream.org"
                   className="text-gray-400 hover:text-red-500"
                 >
-                  info@lifestream.org
+                  info@bloodbuddies.org
                 </a>
               </div>
-              <div className="flex items-start">
-                <span className="text-red-500 mr-3 pt-1">&#9974;</span>
+              <div className="flex items-center">
+                <span className="text-red-500 mr-1 ">&#9974;</span>
                 <p className="text-gray-400">
-                  123 Health Street, Suite 500, City, CA 90001
+                  Darial, Bakerganj, Barishal, Bangladesh
                 </p>
               </div>
             </div>
@@ -162,8 +162,8 @@ const Footer = () => {
         {/* --- Copyright and Bottom Bar --- */}
         <div className="mt-12 pt-6 border-t border-gray-700 text-center">
           <p className="text-gray-500 text-sm">
-            &copy; {new Date().getFullYear()} LifeStream Blood Donation Center.
-            All rights reserved.
+            &copy; {new Date().getFullYear()} BloodBuddies Center. All rights
+            reserved.
           </p>
         </div>
       </div>

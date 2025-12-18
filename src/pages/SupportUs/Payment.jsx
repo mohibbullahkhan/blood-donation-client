@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { FaDollarSign, FaUser, FaEnvelope } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth"; // Get user info
-import useAxiosSecure from "../../hooks/useAxiosSecure"; // For Stripe POST
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
-// Renamed from Payment to PaymentForm for clarity
 const PaymentForm = () => {
-  // Get user authentication and axios secure instance
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const [donationAmount, setDonationAmount] = useState(10); // Default amount
+  const [donationAmount, setDonationAmount] = useState(10);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // --- IMPORTANT: Removed the useQuery for parcels, as it's not needed ---
 
   if (loading) {
     return (
@@ -31,7 +27,6 @@ const PaymentForm = () => {
         <p className="text-gray-600">
           You must be logged in to make a donation.
         </p>
-        {/* You can add a link to the login page here */}
       </div>
     );
   }
@@ -54,14 +49,11 @@ const PaymentForm = () => {
 
     try {
       const checkoutData = {
-        // Use the donationAmount from state, formatted for the backend
         amount: amount.toFixed(2),
-        // Use user info from the auth hook
         donatorEmail: user.email,
         donatorName: user.displayName || "Anonymous Donor",
       };
 
-      // Call your existing backend route /create-funding-checkout-session
       const res = await axiosSecure.post(
         "/create-funding-checkout-session",
         checkoutData
@@ -92,7 +84,7 @@ const PaymentForm = () => {
         onSubmit={handlePayment}
         className="bg-white p-6 rounded-lg shadow-xl border border-red-100"
       >
-        {/* User Information (Read-Only) */}
+        {/* User Information */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-semibold mb-2">
             <FaUser className="inline mr-2 text-red-500" /> Donor Name
@@ -147,7 +139,6 @@ const PaymentForm = () => {
         {/* Payment Button */}
         <button
           type="submit"
-          //   disabled={isSubmitting}
           className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed transition duration-150"
         >
           {isSubmitting
@@ -159,4 +150,4 @@ const PaymentForm = () => {
   );
 };
 
-export default PaymentForm; // Remember to use this export name
+export default PaymentForm;

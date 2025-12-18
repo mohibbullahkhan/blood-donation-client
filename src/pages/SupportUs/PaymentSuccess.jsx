@@ -3,14 +3,14 @@ import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router";
 import { FaCheckCircle, FaSpinner } from "react-icons/fa";
 
-const BACKEND_BASE_URL = "https://blood-donation-server-alpha.vercel.app"; // Match your backend URL
+const BACKEND_BASE_URL = "https://blood-donation-server-alpha.vercel.app";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const sessionId = searchParams.get("session_id");
 
-  const [status, setStatus] = useState("processing"); // 'processing', 'success', 'error'
+  const [status, setStatus] = useState("processing");
   const [message, setMessage] = useState(
     "Verifying your payment and recording your fund..."
   );
@@ -23,7 +23,6 @@ const PaymentSuccess = () => {
       return;
     }
 
-    // Call the backend endpoint to finalize the transaction
     axios
       .get(
         `${BACKEND_BASE_URL}/funding/payment-success-handler?session_id=${sessionId}`
@@ -35,7 +34,7 @@ const PaymentSuccess = () => {
             "Your generous donation has been successfully recorded! Thank you for supporting us."
           );
           setTransactionId(res.data.transactionId);
-          // Clear the session_id from the URL
+
           navigate(location.pathname, { replace: true });
         } else {
           setStatus("error");

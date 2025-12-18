@@ -4,16 +4,12 @@ import { useLoaderData } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const RequestDonation = () => {
-  // --- Data Loading and Setup ---
-  // Assuming the loader data provides an array of objects like: [{ name: "Dhaka", upazilas: ["Mirpur", "Gulshan"] }, ...]
   const bloodLocation = useLoaderData();
   const axiosSecure = useAxiosSecure();
 
-  // Extract unique district names
   const districtDuplicate = bloodLocation.map((c) => c.name);
   const districts = [...new Set(districtDuplicate)];
 
-  // Helper function to get upazilas based on the selected district
   const getUpazilasByDistrict = (districtName) => {
     if (!districtName) return [];
     const selectedDistrictData = bloodLocation.find(
@@ -22,7 +18,7 @@ const RequestDonation = () => {
     return selectedDistrictData ? selectedDistrictData.upazilas : [];
   };
 
-  // --- Form and State Management ---
+  // --- Form Management ---
   const {
     register,
     control,
@@ -37,7 +33,7 @@ const RequestDonation = () => {
     },
   });
 
-  // Watch the selected district to update the upazila options dynamically
+  // Watch the selected district to update the upazila
   const selectedDistrict = useWatch({ control, name: "district" });
 
   // State for managing search results and status
@@ -45,19 +41,16 @@ const RequestDonation = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [isSearched, setIsSearched] = useState(false);
 
-  // --- Search Handler ---
   const handleSearch = async (data) => {
     setIsSearching(true);
     setIsSearched(false);
     setSearchResults([]);
 
-    // Clean up data for the backend request (remove empty strings)
     const query = Object.fromEntries(
       Object.entries(data).filter(([_, v]) => v)
     );
 
     try {
-      // NOTE: Update the API endpoint to your search endpoint
       const res = await axiosSecure.get("/search-donors", {
         params: query,
       });
@@ -66,9 +59,8 @@ const RequestDonation = () => {
       setIsSearched(true);
     } catch (error) {
       console.error("Donor search failed:", error);
-      // Optional: Show an error notification
       setSearchResults([]);
-      setIsSearched(true); // Still consider it 'searched' even if there was an error
+      setIsSearched(true);
     } finally {
       setIsSearching(false);
     }
@@ -160,7 +152,7 @@ const RequestDonation = () => {
                 id="upazila"
                 {...register("upazila")}
                 className="w-full p-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 bg-white disabled:bg-gray-100"
-                disabled={!selectedDistrict} // Disable until a district is selected
+                disabled={!selectedDistrict}
               >
                 <option value="">Select Upazila</option>
                 {getUpazilasByDistrict(selectedDistrict).map((upazila, i) => (
@@ -230,7 +222,6 @@ const RequestDonation = () => {
                     <span className="text-2xl font-extrabold text-white bg-red-600 px-3 py-1 rounded-full">
                       {donor.bloodGroup}
                     </span>
-                    {/* Placeholder for Contact Action - In a real app, this would trigger a modal or redirect */}
                     <button
                       onClick={() =>
                         alert(
