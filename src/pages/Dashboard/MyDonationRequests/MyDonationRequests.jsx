@@ -18,7 +18,7 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-} from "@mui/material"; // Using Material-UI for professional table/pagination
+} from "@mui/material";
 import {
   HeartHandshake,
   MapPin,
@@ -36,12 +36,11 @@ const MyDonationRequests = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  // --- State for Pagination and Filtering ---
+  //State for Pagination and Filtering
   const [currentPage, setCurrentPage] = useState(1);
-  const [filterStatus, setFilterStatus] = useState(""); // Empty string means no filter
-  const itemsPerPage = 10; // Fixed limit per page
+  const [filterStatus, setFilterStatus] = useState("");
+  const itemsPerPage = 10;
 
-  // --- React Query Fetcher ---
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["myDonationRequests", user?.email, currentPage, filterStatus],
     queryFn: async () => {
@@ -58,7 +57,6 @@ const MyDonationRequests = () => {
       return response.data;
     },
     enabled: !!user?.email,
-    // Keep data while fetching next page/filter
     staleTime: 60000,
     keepPreviousData: true,
   });
@@ -66,7 +64,7 @@ const MyDonationRequests = () => {
   const allRequests = data?.requests || [];
   const totalPages = data?.totalPages || 1;
 
-  // --- Helper Functions ---
+  // Helper Functions
   const getStatusColor = (status) => {
     switch (status) {
       case "pending":
@@ -82,17 +80,17 @@ const MyDonationRequests = () => {
     }
   };
 
-  // --- Action Handlers ---
+  // Action Handlers
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   };
 
   const handleFilterChange = (event) => {
     setFilterStatus(event.target.value);
-    setCurrentPage(1); // Reset to first page when filter changes
+    setCurrentPage(1);
   };
 
-  // Status Change Handler (Copied from DashboardHome logic)
+  // Status Change Handler
   const handleStatusChange = (id, newStatus) => {
     Swal.fire({
       title: `Confirm ${newStatus.toUpperCase()}`,
@@ -134,7 +132,7 @@ const MyDonationRequests = () => {
     });
   };
 
-  // Delete Handler (Copied from DashboardHome logic)
+  // Delete Handler
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -367,22 +365,6 @@ const MyDonationRequests = () => {
                           </>
                         )}
 
-                        {/* Edit Button (Available if not done/canceled) */}
-                        {["pending", "inprogress"].includes(
-                          request.donationStatus
-                        ) && (
-                          <Button
-                            component={Link}
-                            to={`/dashboard/edit-request/${request._id}`}
-                            variant="outlined"
-                            size="small"
-                            startIcon={<Edit className="w-4 h-4" />}
-                            title="Edit Request"
-                          >
-                            Edit
-                          </Button>
-                        )}
-
                         {/* Delete Button */}
                         <Button
                           variant="outlined"
@@ -393,19 +375,6 @@ const MyDonationRequests = () => {
                           title="Delete Request"
                         >
                           Delete
-                        </Button>
-
-                        {/* View Button */}
-                        <Button
-                          component={Link}
-                          to={`/dashboard/donation-request-details/${request._id}`}
-                          variant="outlined"
-                          size="small"
-                          color="primary"
-                          startIcon={<Eye className="w-4 h-4" />}
-                          title="View Details"
-                        >
-                          View
                         </Button>
                       </div>
                     </TableCell>
