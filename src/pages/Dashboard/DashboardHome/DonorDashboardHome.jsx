@@ -1,9 +1,9 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query"; // Assuming TanStack Query for data fetching
+import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../hooks/useAxiosSecure"; // Assuming this hook
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 import {
   HeartHandshake,
@@ -25,7 +25,6 @@ const DonorDashboardHome = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
-  // --- Fetch Recent Requests ---
   const {
     data: requestsData,
     isLoading,
@@ -35,13 +34,12 @@ const DonorDashboardHome = () => {
     queryFn: async () => {
       if (!user?.email) return { requests: [] };
 
-      // Call the new backend route
       const response = await axiosSecure.get(
         `/my-recent-requests?email=${user.email}`
       );
       return response.data;
     },
-    enabled: !!user?.email, // Only run the query if the user email exists
+    enabled: !!user?.email,
   });
 
   const recentRequests = requestsData?.requests || [];
@@ -64,7 +62,6 @@ const DonorDashboardHome = () => {
 
   // --- Action Handlers ---
 
-  // NOTE: You will need a backend PATCH/PUT route for this action
   const handleStatusChange = (id, newStatus) => {
     Swal.fire({
       title: `Confirm ${newStatus.toUpperCase()}`,
@@ -76,7 +73,6 @@ const DonorDashboardHome = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          // Placeholder for the necessary backend route to update the status
           const response = await axiosSecure.patch(
             `/donation-requests/status/${id}`,
             { status: newStatus }
@@ -87,7 +83,7 @@ const DonorDashboardHome = () => {
               `Request status changed to ${newStatus}.`,
               "success"
             );
-            refetch(); // Refresh the list
+            refetch();
           } else {
             Swal.fire(
               "Error",
@@ -107,7 +103,6 @@ const DonorDashboardHome = () => {
     });
   };
 
-  // NOTE: You will need a backend DELETE route for this action
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -120,7 +115,6 @@ const DonorDashboardHome = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          // Placeholder for the necessary backend route to delete the request
           const response = await axiosSecure.delete(`/donation-requests/${id}`);
           if (response.data.deletedCount > 0) {
             Swal.fire(
@@ -128,7 +122,7 @@ const DonorDashboardHome = () => {
               "Your donation request has been deleted.",
               "success"
             );
-            refetch(); // Refresh the list
+            refetch();
           } else {
             Swal.fire(
               "Error",
@@ -308,7 +302,7 @@ const DonorDashboardHome = () => {
                           </>
                         )}
 
-                        {/* Edit Button (Available if not done/canceled) */}
+                        {/* Edit Button  */}
                         {["pending", "inprogress"].includes(
                           request.donationStatus
                         ) && (
@@ -329,15 +323,6 @@ const DonorDashboardHome = () => {
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
-
-                        {/* View Button */}
-                        <Link
-                          to={`/dashboard/donation-request-details/${request._id}`}
-                          className="btn btn-sm btn-ghost text-blue-500 hover:bg-blue-100 px-2"
-                          title="View Details"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </Link>
                       </td>
                     </tr>
                   ))}
