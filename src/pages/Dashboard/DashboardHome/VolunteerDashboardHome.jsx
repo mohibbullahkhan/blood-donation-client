@@ -8,9 +8,6 @@ const VolunteerDashboardHome = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  // --- Fetch Admin/Volunteer Statistics (Uses the same Admin endpoint) ---
-  // NOTE: In a secure application, you might use a separate, potentially restricted
-  // endpoint, but based on the requirement to be "the same page," we reuse the stats route.
   const {
     data: stats,
     isLoading,
@@ -18,22 +15,21 @@ const VolunteerDashboardHome = () => {
   } = useQuery({
     queryKey: ["volunteerDashboardStats"],
     queryFn: async () => {
-      // Fetch statistics from the admin backend route
+      // Fetch statistics from the admin route
       const response = await axiosSecure.get("/admin/dashboard-stats");
       return response.data;
     },
     staleTime: 60000,
   });
 
-  // Default stats structure for initial load/error
+  // Default stats
   const dashboardStats = stats || {
     totalUsers: 0,
     totalFunding: "0.00",
     totalRequests: 0,
   };
 
-  // --- Card Data Configuration ---
-  // Reusing the structure and data fetched by the admin stats endpoint
+  // Card Data Configuration
   const statsCards = [
     {
       title: "Total Users (Donors)",
@@ -98,7 +94,7 @@ const VolunteerDashboardHome = () => {
         </p>
       </section>
 
-      {/* Statistics Cards Section (Identical to Admin Dashboard) */}
+      {/* Statistics Cards Section  */}
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {statsCards.map((card, index) => {
           const IconComponent = card.icon;
@@ -131,17 +127,6 @@ const VolunteerDashboardHome = () => {
             </div>
           );
         })}
-      </section>
-
-      {/* Future Volunteer-specific Content */}
-      <section className="mt-12">
-        <h2 className="text-2xl font-bold text-gray-800">Your Current Tasks</h2>
-        <div className="mt-4 p-6 bg-white rounded-xl shadow-lg border border-gray-100">
-          <p className="text-gray-500">
-            *Placeholder for tasks assigned to the volunteer, such as reviewing
-            requests or managing users.*
-          </p>
-        </div>
       </section>
     </div>
   );
