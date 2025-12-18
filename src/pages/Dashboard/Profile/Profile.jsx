@@ -15,15 +15,8 @@ import {
 } from "lucide-react";
 import Swal from "sweetalert2";
 
-// --- Configuration ---
-// FIX 1: Use the absolute URL for reliable API communication
 const BASE_API_URL = "https://blood-donation-server-alpha.vercel.app";
-// ---------------------
 
-/**
- * A reusable component to render a single profile field.
- * Handles read-only state and input changes.
- */
 const InputField = ({
   label,
   name,
@@ -40,7 +33,7 @@ const InputField = ({
     if (isReadOnly) {
       return `${baseClasses} bg-gray-50 text-gray-600 border-gray-200 cursor-default`;
     }
-    // Editable state
+
     return `${baseClasses} bg-white text-gray-900 border-red-400 focus:ring-red-500 focus:border-red-500 shadow-inner`;
   };
 
@@ -57,9 +50,6 @@ const InputField = ({
         id={name}
         name={name}
         value={value || ""}
-        // FIX 2: Ensure onChange is always passed to the controlled component,
-        // but it only updates state if not readOnly. The readOnly prop handles
-        // preventing user input when not in edit mode.
         onChange={onChange}
         readOnly={isReadOnly}
         disabled={isDisabled}
@@ -74,7 +64,7 @@ const Profile = () => {
   const { user } = useAuth();
   const userEmail = user?.email;
 
-  // 1. STATE MANAGEMENT
+  // STATE MANAGEMENT
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(null);
   const [originalData, setOriginalData] = useState(null);
@@ -82,12 +72,9 @@ const Profile = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
 
-  // --- HANDLERS ---
-  // FIX 3: Confirmed correct functional state update for input fields
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
-      // Only spread if prevData exists to avoid runtime error
       ...(prevData || {}),
       [name]: value,
     }));
@@ -96,12 +83,10 @@ const Profile = () => {
   const handleEditClick = () => setIsEditing(true);
 
   const handleCancelClick = () => {
-    // Revert to original data upon cancel
     setFormData(originalData);
     setIsEditing(false);
   };
 
-  // 2. DATA FETCHING: Load profile data on component mount (memoized)
   const loadProfile = useCallback(async () => {
     if (!userEmail) {
       setIsLoading(false);
@@ -125,7 +110,7 @@ const Profile = () => {
 
       const data = await response.json();
       setFormData(data);
-      setOriginalData(data); // Set both on successful fetch
+      setOriginalData(data);
     } catch (err) {
       setError(
         err.message ||
@@ -140,12 +125,10 @@ const Profile = () => {
     loadProfile();
   }, [loadProfile]);
 
-  // Handler for the Save button (API call to PATCH endpoint)
   const handleSaveClick = async () => {
     setIsSaving(true);
     let swalInstance;
 
-    // SweetAlert: Show saving/loading alert (No auto-close)
     Swal.fire({
       title: "Processing Update...",
       text: "Please wait while your data is being updated on the server.",
@@ -165,7 +148,7 @@ const Profile = () => {
     try {
       const updatePayload = {
         email: userEmail,
-        // Only send potentially changed fields
+
         displayName: formData.displayName,
         photoURL: formData.photoURL,
         bloodGroup: formData.bloodGroup,
@@ -185,12 +168,11 @@ const Profile = () => {
         setOriginalData(updatedUser);
         setIsEditing(false);
 
-        // SweetAlert: Success (Stays for 2.5s) - BETTER UX
         Swal.fire({
           title: "Success!",
           text: "Your profile has been updated.",
           icon: "success",
-          timer: 2500, // Display for 2.5 seconds
+          timer: 2500,
           showConfirmButton: false,
           customClass: {
             title: "text-green-600",
@@ -200,7 +182,6 @@ const Profile = () => {
       } else {
         const errorData = await response.json().catch(() => ({}));
 
-        // SweetAlert: Failure (Stays until user clicks OK) - BETTER UX
         Swal.fire({
           title: "Update Failed!",
           text:
@@ -213,14 +194,12 @@ const Profile = () => {
           },
         });
 
-        // Revert form data to original state on failure
         setFormData(originalData);
         setIsEditing(false);
       }
     } catch (networkError) {
       console.error("Network error saving profile:", networkError);
 
-      // SweetAlert: Network Failure (Stays until user clicks OK)
       Swal.fire({
         title: "Connection Error!",
         text: "Could not connect to the server. Check your internet connection.",
@@ -231,19 +210,16 @@ const Profile = () => {
         },
       });
 
-      // Revert form data to original state on failure
       setFormData(originalData);
       setIsEditing(false);
     } finally {
       setIsSaving(false);
-      // Ensure the *loading* pop-up is closed, but not the final success/error one
       if (swalInstance && Swal.isVisible()) {
         Swal.close(swalInstance);
       }
     }
   };
 
-  // 3. RENDER LOGIC for Loading and Error States
   if (isLoading) {
     return (
       <div className="flex justify-center items-center max-w-4xl mx-auto mt-20 p-8 text-center text-xl text-red-600 bg-red-50 rounded-xl shadow-lg">
@@ -274,10 +250,8 @@ const Profile = () => {
     );
   }
 
-  // --- 4. PROFILE RENDERING (Tailwind CSS - Enhanced UI) ---
   return (
     <div className="max-w-6xl mx-auto mt-8 p-10 bg-white shadow-3xl rounded-2xl border-t-4 border-red-600">
-      {/* Header and Buttons */}
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 mb-10 border-b-2 border-red-100">
         <h1 className="text-4xl font-extrabold text-gray-900 mb-4 md:mb-0 flex items-center">
           <User className="mr-4 text-red-600" size={36} />
@@ -286,7 +260,6 @@ const Profile = () => {
           </span>
         </h1>
 
-        {/* Action Buttons */}
         <div className="mt-4 md:mt-0">
           {isEditing ? (
             <div className="flex space-x-4">
@@ -321,7 +294,6 @@ const Profile = () => {
         </div>
       </header>
 
-      {/* Profile Content */}
       <div className="flex flex-col md:flex-row gap-10">
         {/* Left Column: Avatar and Quick Info */}
         <div className="md:w-1/3 flex flex-col items-center p-6 bg-red-50 rounded-xl shadow-inner border border-red-100">
@@ -357,14 +329,13 @@ const Profile = () => {
         {/* Right Column: Form Fields */}
         <div className="md:w-2/3">
           <form className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
-            {/* Non-Editable Fields */}
             <InputField
               label="Email Address (Login Identifier)"
               name="email"
               value={formData.email}
               isAlwaysReadOnly={true}
               isEditing={isEditing}
-              onChange={handleInputChange} // Fix: pass onChange always
+              onChange={handleInputChange}
               isDisabled={isSaving}
             />
             <InputField
@@ -378,7 +349,7 @@ const Profile = () => {
               }
               isAlwaysReadOnly={true}
               isEditing={isEditing}
-              onChange={handleInputChange} // Fix: pass onChange always
+              onChange={handleInputChange}
               isDisabled={isSaving}
             />
 
@@ -388,7 +359,7 @@ const Profile = () => {
               name="displayName"
               value={formData.displayName}
               isEditing={isEditing}
-              onChange={handleInputChange} // Fix: pass onChange always
+              onChange={handleInputChange}
               isDisabled={isSaving}
             />
             <InputField
@@ -396,7 +367,7 @@ const Profile = () => {
               name="bloodGroup"
               value={formData.bloodGroup}
               isEditing={isEditing}
-              onChange={handleInputChange} // Fix: pass onChange always
+              onChange={handleInputChange}
               isDisabled={isSaving}
             />
 
@@ -405,7 +376,7 @@ const Profile = () => {
               name="district"
               value={formData.district}
               isEditing={isEditing}
-              onChange={handleInputChange} // Fix: pass onChange always
+              onChange={handleInputChange}
               isDisabled={isSaving}
             />
             <InputField
@@ -413,7 +384,7 @@ const Profile = () => {
               name="upazila"
               value={formData.upazila}
               isEditing={isEditing}
-              onChange={handleInputChange} // Fix: pass onChange always
+              onChange={handleInputChange}
               isDisabled={isSaving}
             />
           </form>
