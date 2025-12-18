@@ -3,7 +3,7 @@ import HomeBanner from "./Banner/HomeBanner";
 import DonationProcess from "./DonationProcess/DonationProcess";
 import HomeContact from "./HomeContact/HomeContact";
 import ImpactStats from "./ImpactStats/ImpactStats";
-import FAQ from "./FAQ/Faq";
+import FAQ from "./FAQ/FAQ";
 
 const Home = () => {
   return (

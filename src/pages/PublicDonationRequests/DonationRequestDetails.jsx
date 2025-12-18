@@ -18,22 +18,12 @@ import {
 } from "lucide-react";
 import useAuth from "../../hooks/useAuth";
 
-// --- Configuration & Authentication Mock ---
+
 const API_BASE_URL = "https://blood-donation-server-alpha.vercel.app";
 
-// MOCK AUTH (You MUST replace this with your actual Auth Context/Hook)
-// const useAuth = () => {
-//   // NOTE: For this private page, we assume the user is logged in.
-//   const isAuthenticated = true;
-//   const user = {
-//     displayName: "Mock Donor",
-//     email: "mockdonor@example.com",
-//     role: "donor",
-//   };
-//   return { isAuthenticated, user };
-// };
 
-// --- Modal Component ---
+
+// Modal Component 
 const DonateModal = ({ request, donor, isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
@@ -93,9 +83,9 @@ const DonateModal = ({ request, donor, isOpen, onClose, onConfirm }) => {
   );
 };
 
-// --- Main Component: DonationRequestDetails ---
+// Main Component
 const DonationRequestDetails = () => {
-  const { id } = useParams(); // Get the request ID from the URL
+  const { id } = useParams(); 
 
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -107,15 +97,12 @@ const DonationRequestDetails = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [updateMessage, setUpdateMessage] = useState(null);
 
-  // --- Authentication Check ---
   useEffect(() => {
     if (!user) {
-      // Redirect to login if not authenticated
       navigate("/login", { state: { redirectTo: `/donation-requests/${id}` } });
     }
   }, [user, navigate, id]);
 
-  // --- Data Fetching ---
   const fetchRequest = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -147,7 +134,6 @@ const DonationRequestDetails = () => {
     setIsUpdating(true);
     setUpdateMessage(null);
     try {
-      // API call to update the status and assign the donor
       const response = await axios.patch(
         `${API_BASE_URL}/donation-requests/assign-donor/${id}`,
         {
@@ -156,7 +142,6 @@ const DonationRequestDetails = () => {
         }
       );
 
-      // Update local state to reflect the change
       setRequest((prev) => ({
         ...prev,
         donationStatus: "inprogress",
@@ -182,8 +167,7 @@ const DonationRequestDetails = () => {
   };
 
   if (!user) {
-    // If not authenticated, the useEffect hook will handle the redirect.
-    // Return null or a basic loading state for now.
+
     return (
       <div className="p-8 text-center text-gray-500">
         Checking authentication...
@@ -210,7 +194,6 @@ const DonationRequestDetails = () => {
     );
   }
 
-  // --- Display logic for the request details ---
   const formatDate = (dateString) =>
     new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -383,7 +366,7 @@ const DonationRequestDetails = () => {
   );
 };
 
-// Helper component for cleaner detail display
+// Helper component 
 const DetailItem = ({ icon, label, value }) => (
   <div className="flex items-start">
     <div className="text-red-500 mt-1 mr-3 flex-shrink-0">{icon}</div>
