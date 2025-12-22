@@ -129,19 +129,6 @@ const AdminDashboardHome = () => {
           );
         })}
       </section>
-
-      {/* Future Admin Content  */}
-      <section className="mt-12">
-        <h2 className="text-2xl font-bold text-gray-800">
-          Recent Activity Overview
-        </h2>
-        <div className="mt-4 p-6 bg-white rounded-xl shadow-lg border border-gray-100">
-          <p className="text-gray-500">
-            *Placeholder for graphs, tables, and quick action buttons for admin
-            tasks.*
-          </p>
-        </div>
-      </section>
     </div>
   );
 };

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router";
-import { FaCheckCircle, FaSpinner } from "react-icons/fa";
+import { FaCheckCircle, FaSpinner, FaTimesCircle } from "react-icons/fa";
 
 const BACKEND_BASE_URL = "https://blood-donation-server-alpha.vercel.app";
 
@@ -10,6 +10,8 @@ const PaymentSuccess = () => {
   const navigate = useNavigate();
   const sessionId = searchParams.get("session_id");
 
+  const hasVerified = useRef(false);
+
   const [status, setStatus] = useState("processing");
   const [message, setMessage] = useState(
     "Verifying your payment and recording your fund..."
@@ -17,6 +19,9 @@ const PaymentSuccess = () => {
   const [transactionId, setTransactionId] = useState("");
 
   useEffect(() => {
+    if (hasVerified.current) return;
+    hasVerified.current = true;
+
     if (!sessionId) {
       setStatus("error");
       setMessage("Invalid payment session. Please check your link.");
@@ -31,11 +36,10 @@ const PaymentSuccess = () => {
         if (res.data.success) {
           setStatus("success");
           setMessage(
-            "Your generous donation has been successfully recorded! Thank you for supporting us."
+            res.data.message ||
+              "Your generous donation has been successfully recorded! Thank you for supporting us."
           );
           setTransactionId(res.data.transactionId);
-
-          navigate(location.pathname, { replace: true });
         } else {
           setStatus("error");
           setMessage(
@@ -47,30 +51,11 @@ const PaymentSuccess = () => {
         console.error("Error confirming payment:", err);
         setStatus("error");
         setMessage(
-          "A server error occurred while confirming your fund. Please check your email for a receipt or contact support. Error: " +
-            (err.response?.data?.message || err.message)
+          err.response?.data?.message ||
+            "A server error occurred while confirming your fund. Please contact support."
         );
       });
-  }, [sessionId, navigate]);
-
-  let icon, color, buttonText;
-  switch (status) {
-    case "success":
-      icon = <FaCheckCircle className="text-green-500 w-20 h-20 mb-4" />;
-      color = "bg-green-50";
-      buttonText = "Back to Home";
-      break;
-    case "error":
-      icon = <FaCheckCircle className="text-red-500 w-20 h-20 mb-4" />;
-      color = "bg-red-50";
-      buttonText = "Go Home";
-      break;
-    case "processing":
-    default:
-      icon = <FaSpinner className="text-red-600 w-20 h-20 mb-4 animate-spin" />;
-      color = "bg-gray-50";
-      buttonText = "Checking Status...";
-  }
+  }, [sessionId]);
 
   const handleButtonClick = () => {
     if (status === "success") {
@@ -80,10 +65,30 @@ const PaymentSuccess = () => {
     }
   };
 
+  let icon, title, bgColor, buttonText;
+
+  if (status === "processing") {
+    icon = <FaSpinner className="text-red-600 w-20 h-20 mb-4 animate-spin" />;
+    title = "Processing Payment";
+    bgColor = "bg-gray-50";
+    buttonText = "Checking Status...";
+  } else if (status === "success") {
+    icon = <FaCheckCircle className="text-green-500 w-20 h-20 mb-4" />;
+    title = "Fund Successful!";
+    bgColor = "bg-green-50";
+    buttonText = "Back to Support Page";
+  } else {
+    icon = <FaTimesCircle className="text-red-500 w-20 h-20 mb-4" />;
+    title = "Payment Error";
+    bgColor = "bg-red-50";
+    buttonText = "Go Home";
+  }
+
   return (
-    <div className={`flex items-center justify-center min-h-screen ${color}`}>
+    <div className={`flex items-center justify-center min-h-screen ${bgColor}`}>
       <div className="max-w-xl w-full bg-white p-10 rounded-xl shadow-2xl text-center">
         {icon}
+
         <h1
           className={`text-3xl font-bold mb-4 ${
             status === "success"
@@ -93,12 +98,9 @@ const PaymentSuccess = () => {
               : "text-gray-700"
           }`}
         >
-          {status === "success"
-            ? "Fund Successful!"
-            : status === "error"
-            ? "Payment Error"
-            : "Processing Payment"}
+          {title}
         </h1>
+
         <p className="text-gray-600 mb-6">{message}</p>
 
         {transactionId && (
@@ -114,7 +116,7 @@ const PaymentSuccess = () => {
             status === "success"
               ? "bg-red-600 hover:bg-red-700 text-white"
               : status === "error"
-              ? "bg-gray-400 hover:bg-gray-500 text-white"
+              ? "bg-gray-500 hover:bg-gray-600 text-white"
               : "bg-gray-300 text-gray-600 cursor-not-allowed"
           }`}
         >
