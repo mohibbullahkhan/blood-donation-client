@@ -18,12 +18,9 @@ import {
 } from "lucide-react";
 import useAuth from "../../hooks/useAuth";
 
-
 const API_BASE_URL = "https://blood-donation-server-alpha.vercel.app";
 
-
-
-// Modal Component 
+// Modal Component
 const DonateModal = ({ request, donor, isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
@@ -85,7 +82,7 @@ const DonateModal = ({ request, donor, isOpen, onClose, onConfirm }) => {
 
 // Main Component
 const DonationRequestDetails = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
 
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -108,13 +105,13 @@ const DonationRequestDetails = () => {
     setError(null);
     try {
       const response = await axios.get(
-        `${API_BASE_URL}/donation-requests/${id}`
+        `${API_BASE_URL}/donation-requests/${id}`,
       );
       setRequest(response.data);
     } catch (err) {
       console.error("Error fetching request details:", err);
       setError(
-        err.response?.data?.message || "Failed to fetch request details."
+        err.response?.data?.message || "Failed to fetch request details.",
       );
     } finally {
       setLoading(false);
@@ -139,7 +136,7 @@ const DonationRequestDetails = () => {
         {
           donorName: user.displayName,
           donorEmail: user.email,
-        }
+        },
       );
 
       setRequest((prev) => ({
@@ -167,7 +164,6 @@ const DonationRequestDetails = () => {
   };
 
   if (!user) {
-
     return (
       <div className="p-8 text-center text-gray-500">
         Checking authentication...
@@ -259,7 +255,12 @@ const DonationRequestDetails = () => {
             <DetailItem
               icon={<MessageSquare />}
               label="Reason/Message"
-              value={request.requestMessage || "N/A"}
+              value={
+                // request.requestMessage || "N/A"
+                <p className="max-w-full sm:max-w-[380px] break-words whitespace-pre-wrap">
+                  {request.requestMessage || "N/A"}
+                </p>
+              }
             />
 
             <h2 className="text-xl font-bold text-red-700 border-b pb-2 mt-8">
@@ -366,7 +367,7 @@ const DonationRequestDetails = () => {
   );
 };
 
-// Helper component 
+// Helper component
 const DetailItem = ({ icon, label, value }) => (
   <div className="flex items-start">
     <div className="text-red-500 mt-1 mr-3 flex-shrink-0">{icon}</div>
